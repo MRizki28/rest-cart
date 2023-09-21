@@ -17,6 +17,7 @@
         <h2 class="text-center mt-3">Tambah Menu</h2>
         <div>
             <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cartCount"></span>
         </div>
         <form action="" id="formTambah" enctype="multipart/form-data">
             <div class=" mt-2">
@@ -138,7 +139,7 @@
                         if (response.message === 'success add cart') {
                             alert('Item telah ditambahkan ke keranjang.');
                             $('#quantityModal').modal('hide');
-                            showCartModal();
+                            updateCartCount();
                         } else {
                             alert('Gagal menambahkan item ke keranjang.');
                         }
@@ -160,8 +161,26 @@
                 }
                 addToCart(id_menu, quantity);
             });
+        });
 
-
+        function updateCartCount() {
+            $.ajax({
+                type: "get",
+                url: "{{ url('api/v2/cart/count') }}",
+                dataType: "JSON",
+                success: function(response) {
+                    console.log(response)
+                    const cartCount = response.total_items;
+                    $('#cartCount').text(cartCount);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+        
+        $(document).ready(function() {
+            updateCartCount();
         });
 
 

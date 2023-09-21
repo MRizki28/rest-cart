@@ -28,5 +28,6 @@ Route::prefix('v1/menu')->controller(MenuController::class)->group(function () {
 Route::prefix('v2/cart')->controller(CartController::class)->group(function () {
     Route::get('/' , 'getAllData');
     Route::post('/create' , 'createData');
+    Route::get('/count' , 'countData');
 });
 
